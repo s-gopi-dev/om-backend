@@ -27,6 +27,10 @@ env/
 */migrations/*.log
 */migrations/*.sqlite3
 
+# Django specific
+*.log
+*.pot
+
 # SQLite Database
 *.sqlite3
 db.sqlite3

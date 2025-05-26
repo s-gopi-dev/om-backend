@@ -15,11 +15,18 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 class BlogSerializer(serializers.ModelSerializer):
+    title = serializers.CharField(max_length=100)
+    content = serializers.CharField()
     author = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = Blog
         fields = '__all__'
+    
+    def validate_title(self, value):
+        if '<script>' in value.lower():
+            raise serializers.ValidationError("Invalid content in title")
+        return value
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
