@@ -1,0 +1,63 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pdb
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Environment
+.env
+.venv/
+venv/
+ENV/
+env/
+*.env
+*.env.*
+
+# Django migrations
+*/migrations/__pycache__/
+*/migrations/*.pyc
+*/migrations/*.pyo
+*/migrations/*.pyd
+*/migrations/*.log
+*/migrations/*.sqlite3
+
+# SQLite Database
+*.sqlite3
+db.sqlite3
+
+# Media and static (if locally generated)
+media/
+staticfiles/
+static/
+
+# VS Code settings
+.vscode/
+.history/
+
+# Pytest / coverage
+htmlcov/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+
+# MyPy / Pylint
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# macOS / Windows / Linux system files
+.DS_Store
+Thumbs.db
