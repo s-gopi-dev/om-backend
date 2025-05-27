@@ -41,11 +41,13 @@ INSTALLED_APPS = [
     'blogAPI',
     'rest_framework_simplejwt.token_blacklist', # For token blacklisting
     'axes',  # For brute force protection
+    'corsheaders' 
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -143,7 +145,8 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'anon': '20/minute',
         'user': '100/minute',
-    }
+    },
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
 }
 
 # Simple JWT settings
@@ -167,9 +170,16 @@ AXES_RESET_ON_SUCCESS = True
 AXES_LOCK_OUT_AT_FAILURE = True
 
 # CSRF settings for additional security
-# CSRF_TRUSTED_ORIGINS = [
-#     'https://yourdomain.com',  # Replace with your actual domain
-# ] 
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+] 
+
+CORS_ALLOW_CREDENTIALS = True
+
+
+CORS_ALLOW_ALL_ORIGINS = True
+
 
 # Strong Password Policies
 AUTH_PASSWORD_VALIDATORS = [

@@ -17,11 +17,14 @@ class UserSerializer(serializers.ModelSerializer):
 class BlogSerializer(serializers.ModelSerializer):
     title = serializers.CharField(max_length=100)
     content = serializers.CharField()
-    author = serializers.StringRelatedField(read_only=True)
+    author = serializers.SerializerMethodField()
 
     class Meta:
         model = Blog
         fields = '__all__'
+    
+    def get_author(self, obj):
+        return obj.author.username
     
     def validate_title(self, value):
         if '<script>' in value.lower():
@@ -40,4 +43,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         # change to use email instead of username
         attrs['username'] = attrs.get('email')
-        return super().validate(attrs)
+        response = super().validate(attrs)
+
+        response['username'] = self.user.username
+        return response

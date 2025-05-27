@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import PermissionDenied
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.pagination import PageNumberPagination
 from .models import Blog
 from .serializers import BlogSerializer, UserSerializer, CustomTokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -30,6 +31,7 @@ class SignupView(APIView):
             refresh = RefreshToken.for_user(user)
             return Response({
                 'message': 'Account created successfully.',
+                'username': user.username,
                 'access': str(refresh.access_token),
                 'refresh': str(refresh),
                 
@@ -42,10 +44,15 @@ class BlogCreateView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 100
 
 class BlogListView(generics.ListAPIView):
     queryset = Blog.objects.all().order_by('-created_at')
     serializer_class = BlogSerializer
+    pagination_class = StandardResultsSetPagination
 
 class BlogDetailView(generics.RetrieveAPIView):
     queryset = Blog.objects.all()
